@@ -14,11 +14,11 @@ const CategoryListing = () => {
             </div>
 
             <div className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">
-              <div className="group aspect-w-2 aspect-h-1 rounded-lg overflow-hidden sm:aspect-h-1 sm:aspect-w-1 sm:row-span-2">
+              <div className="group aspect-w-2 aspect-h-1 shadow-md overflow-hidden sm:aspect-h-1 sm:aspect-w-1 sm:row-span-2">
                 <img
                   src="https://images.unsplash.com/photo-1516195851888-6f1a981a862e?ixlib"
                   alt="Women Clothing"
-                  className="object-center object-cover group-hover:opacity-75"
+                  className="object-center object-cover transition-all ease-in-out delay-75 group-hover:scale-105"
                 />
                 <div  className="bg-gradient-to-b from-transparent to-black opacity-50" />
                 <div className="p-6 flex items-end">
@@ -35,11 +35,11 @@ const CategoryListing = () => {
                   </div>
                 </div>
               </div>
-              <div className="group aspect-w-2 aspect-h-1 rounded-lg overflow-hidden sm:relative sm:aspect-none sm:h-full">
+              <div className="group aspect-w-2 aspect-h-1 shadow-md overflow-hidden sm:relative sm:aspect-none sm:h-full">
                 <img
                   src="https://images.unsplash.com/photo-1492288991661-058aa541ff43?ixlib"
                   alt="Men Clothing"
-                  className="object-center object-cover group-hover:opacity-75 sm:absolute sm:inset-0 sm:w-full sm:h-full"
+                  className="object-center object-cover transition-all ease-in-out delay-75 group-hover:scale-105 sm:absolute sm:inset-0 sm:w-full sm:h-full"
                 />
                 <div
                   
@@ -59,11 +59,11 @@ const CategoryListing = () => {
                   </div>
                 </div>
               </div>
-              <div className="group aspect-w-2 aspect-h-1 rounded-lg overflow-hidden sm:relative sm:aspect-none sm:h-full">
+              <div className="group aspect-w-2 aspect-h-1 shadow-md overflow-hidden sm:relative sm:aspect-none sm:h-full">
                 <img
                   src="https://images.unsplash.com/photo-1596944924591-1e64760c2be8?ixlib"
                   alt="Jewellery"
-                  className="object-center object-cover group-hover:opacity-75 sm:absolute sm:inset-0 sm:w-full sm:h-full"
+                  className="object-center object-cover transition-all ease-in-out delay-75 group-hover:scale-105 sm:absolute sm:inset-0 sm:w-full sm:h-full"
                 />
                 <div
                   
