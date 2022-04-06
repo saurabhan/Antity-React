@@ -6,7 +6,7 @@ import Navbar from '../components/navbar/Navbar'
 import Footer from '../components/Footer/Footer'
 const Cart = () => {
 
-  const { cart , handleUpdateCartQty} = useCart()
+  const { cart , handleUpdateCartQty, handleRemoveFromCart} = useCart()
   
 
   if (!cart.line_items) return (
@@ -67,7 +67,7 @@ const Cart = () => {
                         
 
                         <div className="absolute top-0 right-0">
-                          <button type="button" className="-m-2 p-2 inline-flex text-gray-400 hover:text-gray-500">
+                          <button type="button" onClick={() => handleRemoveFromCart(product.id)} className="-m-2 p-2 inline-flex text-gray-400 hover:text-gray-500">
                             <XIcon className="h-5 w-5"/>
                           </button>
                         </div>
