@@ -1,48 +1,15 @@
 import React from "react";
 import ProductCard from "../components/ProductCard/ProductCard";
-import { products } from "../db/productslist";
 import Navbar from "../components/navbar/Navbar";
 import Footer from "../components/Footer/Footer";
-
-const filters = [
-  {
-    id: "color",
-    name: "Color",
-    options: [
-      { value: "white", label: "White" },
-      { value: "beige", label: "Beige" },
-      { value: "blue", label: "Blue" },
-      { value: "brown", label: "Brown" },
-      { value: "green", label: "Green" },
-      { value: "purple", label: "Purple" },
-    ],
-  },
-  {
-    id: "category",
-    name: "Category",
-    options: [
-      { value: "new-arrivals", label: "All New Arrivals" },
-      { value: "tees", label: "Tees" },
-      { value: "crewnecks", label: "Crewnecks" },
-      { value: "sweatshirts", label: "Sweatshirts" },
-      { value: "pants-shorts", label: "Pants & Shorts" },
-    ],
-  },
-  {
-    id: "sizes",
-    name: "Sizes",
-    options: [
-      { value: "xs", label: "XS" },
-      { value: "s", label: "S" },
-      { value: "m", label: "M" },
-      { value: "l", label: "L" },
-      { value: "xl", label: "XL" },
-      { value: "2xl", label: "2XL" },
-    ],
-  },
-];
+import { useCart } from "../context/CartContext";
+import { useWishlist } from "../context/WishlistContext";
 
 function Products() {
+  
+  const { products} = useCart()
+  const { wishlist } = useWishlist()
+  
   return (
     <div>
       <Navbar/>
@@ -66,39 +33,36 @@ function Products() {
             </button>
 
             <div className="hidden lg:block">
-              <form className="divide-y divide-gray-200 space-y-10">
-                {filters.map((section, sectionIdx) => (
-                  <div
-                    key={section.name}
-                    className={sectionIdx === 0 ? null : "pt-10"}
-                  >
-                    <fieldset>
-                      <legend className="block text-sm font-medium text-gray-900">
-                        {section.name}
-                      </legend>
-                      <div className="pt-6 space-y-3">
-                        {section.options.map((option, optionIdx) => (
-                          <div key={option.value} className="flex items-center">
-                            <input
-                              id={`${section.id}-${optionIdx}`}
-                              name={`${section.id}[]`}
-                              defaultValue={option.value}
-                              type="checkbox"
-                              className="h-4 w-4 border-gray-300 rounded text-gray-600 focus:ring-gray-500"
-                            />
-                            <label
-                              htmlFor={`${section.id}-${optionIdx}`}
-                              className="ml-3 text-sm text-gray-600"
-                            >
-                              {option.label}
-                            </label>
-                          </div>
-                        ))}
-                      </div>
-                    </fieldset>
-                  </div>
-                ))}
-              </form>
+              <h1 className="font-bold">Price</h1>
+              <div className="flex flex-col">
+
+              <label class="inline-flex items-center mt-3">
+                <input type="radio" class=" h-5 w-5 text-gray-600" name='sort'/><span class="ml-2 text-gray-700">low to high</span>
+              </label>
+              <label class="inline-flex items-center mt-3">
+                <input type="radio" class=" h-5 w-5 text-gray-600" name='sort'/><span class="ml-2 text-gray-700">high to low</span>
+              </label>
+              </div>
+              <div className='flex flex-col mt-5'>
+                <h1 className="font-bold">Category</h1>
+              <label class="inline-flex items-center mt-3">
+                <input type="checkbox" class=" h-5 w-5 text-gray-600" /><span class="ml-2 text-gray-700">Women</span>
+              </label>
+              <label class="inline-flex items-center mt-3">
+                <input type="checkbox" class=" h-5 w-5 text-gray-600" /><span class="ml-2 text-gray-700">Men</span>
+              </label>
+              <label class="inline-flex items-center mt-3">
+                <input type="checkbox" class=" h-5 w-5 text-gray-600" /><span class="ml-2 text-gray-700">Jewellery</span>
+              </label>
+              </div>
+              <div className="mt-5">
+                <h1 className="font-bold">Ratings</h1>
+              <label class="inline-flex items-center mt-3">
+              <span class="mr-2 text-gray-700">0</span>
+                <input type="range" class=" h-5 w-full" min="0"
+    max="5" /><span class="ml-2 text-gray-700">5</span>
+              </label>
+              </div>
             </div>
           </aside>
 
@@ -108,7 +72,8 @@ function Products() {
             <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
 
             {products.map((product) => (
-              <ProductCard {...product} />
+              <ProductCard {...product} key={product.id} />
+              // console.log(product)
             ))}
             </div>
             {/* /End replace */}
