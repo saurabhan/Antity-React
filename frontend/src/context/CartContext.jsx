@@ -42,6 +42,12 @@ const CartProvider = ({ children }) => {
         setCart(item.cart);
       };
 
+    const handleRemoveFromCart = async (productID) => {
+        const item = await commerce.cart.remove(productID);
+    
+        setCart(item.cart);
+      };
+
 
     useEffect(() => {
         fetchProducts();
@@ -56,6 +62,7 @@ const CartProvider = ({ children }) => {
             addToCart,
             removeFromCart,
             handleUpdateCartQty,
+            handleRemoveFromCart,
             changeQuantity
         }}
         >
