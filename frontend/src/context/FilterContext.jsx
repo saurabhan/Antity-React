@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { commerce } from "../utils/commerce";
+import { useCart } from "./CartContext";
 
 const FilterContext = createContext();
 const useFilter = () => useContext(FilterContext);
@@ -7,10 +8,15 @@ const useFilter = () => useContext(FilterContext);
 const FilterProvider = ({children})=>{
 
     const [ filteredProducts, setFilteredProducts]= useState([]);
-
+    const { products } = useCart();
     const fetchProducts = async () => {
         const { data } = await commerce.products.list();
         setFilteredProducts(data);
+    }
+
+    const sortRating = (rating) => {
+        const ratingFilter = products.filter( p => p.attributes[0].value[0].value === rating)
+        setFilteredProducts(ratingFilter)
     }
 
     const sortProducts = async (order, cat = 'all') => {
@@ -38,7 +44,8 @@ const FilterProvider = ({children})=>{
     value={{
         filteredProducts,
         sortProducts,
-        sortCat
+        sortCat,
+        sortRating
     }}>
         {children}
     </FilterContext.Provider>

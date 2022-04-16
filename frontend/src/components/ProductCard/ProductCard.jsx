@@ -4,9 +4,9 @@ import { useWishlist } from '../../context/WishlistContext'
 
 
 const ProductCard = (product) => {
-  const {addToCart, removeFromCart} = useCart()
-  const { wishlist, addToWishlist, removeFromWishlist } = useWishlist()
-  const { id, image, name, price, description } = product;
+  const {addToCart} = useCart()
+  const {  addToWishlist} = useWishlist()
+  const { id, image, name, price } = product;
   return (
     <div>
         <div>
