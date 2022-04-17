@@ -2,26 +2,12 @@ import React from "react";
 import ProductCard from "../components/ProductCard/ProductCard";
 import Navbar from "../components/navbar/Navbar";
 import Footer from "../components/Footer/Footer";
-import { useCart } from "../context/CartContext";
-import { useWishlist } from "../context/WishlistContext";
 import { useFilter } from "../context/FilterContext";
-import FeaturedProducts from "../components/FeaturedProducts/FeaturedProducts";
 
-const filter = [
-  {
-    name:'asc',
-    value: 'desc'
-  },
-  {
-    name: 'asc',
-    value: 'asc'
-  }
-]
 
 function Products() {
   
-  const { products} = useCart()
-  const { filteredProducts, sortProducts, sortCat} = useFilter()
+  const { filteredProducts, sortProducts, sortCat, sortRating} = useFilter()
   
   return (
     <div>
@@ -72,23 +58,18 @@ function Products() {
                 <h1 className="font-bold">Ratings</h1>
               <label class="inline-flex items-center mt-3">
               <span class="mr-2 text-gray-700">0</span>
-                <input type="range" class=" h-5 w-full" min="0"
+                <input onChange={(e) => sortRating(e.target.value)} type="range" class=" h-5 w-full" min="0"
     max="5" /><span class="ml-2 text-gray-700">5</span>
               </label>
               </div>
             </div>
           </aside>
-
-          {/* Product grid */}
           <div className="mt-6 lg:mt-0 lg:col-span-2 xl:col-span-3">
-            {/* Replace with your content */}
             <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
-        
             {filteredProducts.map((product) => (
               <ProductCard {...product} key={product.id} />
             ))}
             </div>
-            {/* /End replace */}
           </div>
         </div>
       </main>
