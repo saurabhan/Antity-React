@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
 import { useWishlist } from '../../context/WishlistContext'
 
@@ -10,7 +11,7 @@ const ProductCard = (product) => {
   return (
     <div>
         <div>
-              <a href="#" className="relative">
+              <Link to={`/products/${id}`} className="relative">
                 <div className="relative w-full h-72  overflow-hidden">
                   <img
                     src={image.url}
@@ -25,7 +26,7 @@ const ProductCard = (product) => {
                 <div className="absolute top-0 h-72  p-4 flex items-end justify-end overflow-hidden">
                   <p className="relative text-lg font-semibold text-white">{price.formatted_with_symbol}</p>
                 </div>
-              </a>
+              </Link>
               <div className="mt-6 flex flex-col gap-4">
                 <button
                   onClick={() => {addToWishlist(product, id)}}

@@ -1,6 +1,4 @@
 import React from 'react'
-import Footer from '../components/Footer/Footer';
-import Navbar from '../components/navbar/Navbar';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 
@@ -9,7 +7,6 @@ const Wishlist = () => {
   const { wishlist, removeFromWishlist } = useWishlist()
   return (
       <div>
-          <Navbar/>
       <main className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
           <h1 className="text-3xl font-bold">Wishlist</h1>
       <div className="mt-6 lg:mt-0 lg:col-span-2 xl:col-span-3">
@@ -59,7 +56,6 @@ const Wishlist = () => {
       </div>
       </div>
       </main>
-      <Footer/>
       </div>
   )}
 export default Wishlist

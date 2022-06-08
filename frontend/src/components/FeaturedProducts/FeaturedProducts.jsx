@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 
 
@@ -26,10 +27,10 @@ const FeaturedProducts = () => {
               />
             </div>
             <h3 className="mt-4 text-base font-semibold text-gray-900">
-              <a href={product.id}>
+              <Link to={`products/${product.id}`}>
                 <span className="absolute inset-0" />
                 {product.name}
-              </a>
+              </Link>
             </h3>
             <p className="mt-1 text-sm text-gray-500">{product.price.formatted_with_symbol}</p>
           </div>

@@ -13,7 +13,6 @@ const FilterProvider = ({children})=>{
         const { data } = await commerce.products.list();
         setFilteredProducts(data);
     }
-
     const sortRating = (rating) => {
         const ratingFilter = products.filter( p => p.attributes[0].value[0].value === rating)
         setFilteredProducts(ratingFilter)
@@ -38,6 +37,7 @@ const FilterProvider = ({children})=>{
     useEffect(() => {
         fetchProducts();
       }, []);
+
 
     return (
     <FilterContext.Provider
