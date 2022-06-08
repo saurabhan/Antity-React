@@ -1,9 +1,11 @@
-import { useState } from "react";
+
 import {
   CheckIcon,
   StarIcon,
 } from "@heroicons/react/solid";
-import { products } from "../db/productslist";
+import { useParams } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import { useWishlist } from "../context/WishlistContext";
 
 const reviews = { average: 4, totalCount: 1624 };
 
@@ -13,7 +15,14 @@ function classNames(...classes) {
 }
 
 export default function ProductInfo() {
+  const productID = useParams();
+  const {products, addToCart } = useCart()
+  const {  addToWishlist} = useWishlist()
+  const product = products.filter(product => product.id === productID.productId)
 
+
+  
+ 
   return (
     <div className="bg-white">
       <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8">
@@ -21,8 +30,8 @@ export default function ProductInfo() {
         <div className="mt-10 lg:mt-0 lg:col-start-1 lg:row-span-2 lg:self-center">
           <div className="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
             <img
-              src={products[1].imageSrc}
-              alt={products[1].imageAlt}
+              src={product[0].image.url}
+              alt={product[0].name}
               className="w-full h-full object-center object-cover"
             />
           </div>
@@ -32,14 +41,14 @@ export default function ProductInfo() {
         <div className="lg:max-w-lg lg:self-end">
           <div className="mt-4">
             <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-              {products[1].name}
+              {product[0].name}
             </h1>
           </div>
 
           <section className="mt-4">
             <div className="flex items-center">
               <p className="text-lg text-gray-900 sm:text-xl">
-                {products[1].price}
+                {product[0].price.raw}
               </p>
 
               <div className="ml-4 pl-4 border-l border-gray-300">
@@ -68,7 +77,7 @@ export default function ProductInfo() {
             </div>
 
             <div className="mt-4 space-y-6">
-              <p className="text-base text-gray-500">{products[1].description}</p>
+              <p  dangerouslySetInnerHTML={{__html: product[0].description}} className="text-base text-gray-500"></p>
             </div>
 
             <div className="mt-6 flex items-center">
@@ -83,18 +92,18 @@ export default function ProductInfo() {
           </section>
         </div>
         <div className="mt-6 flex flex-col gap-4">
-                <a
-                  href={products[1].href}
+                <button
+                  onClick={() => addToWishlist(product[0], productID)}
                   className="relative flex bg-gray-100 border border-transparent rounded-md py-2 px-8 items-center justify-center text-sm font-medium text-gray-900 hover:bg-gray-200"
                 >
                   Add to Wishlist
-                </a>
-                <a
-                  href={products[1].href}
+                </button>
+                <button
+                  onClick={() => addToCart(product[0], 1)}
                   className="relative flex bg-gray-900 border border-transparent rounded-md py-2 px-8 items-center justify-center text-sm font-medium text-gray-100 hover:bg-gray-700"
                 >
                   Add to Cart
-                </a>
+                </button>
               </div>
       </div>
       

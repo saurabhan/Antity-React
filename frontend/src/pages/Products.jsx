@@ -1,7 +1,5 @@
 import React from "react";
 import ProductCard from "../components/ProductCard/ProductCard";
-import Navbar from "../components/navbar/Navbar";
-import Footer from "../components/Footer/Footer";
 import { useFilter } from "../context/FilterContext";
 
 
@@ -11,7 +9,6 @@ function Products() {
   
   return (
     <div>
-      <Navbar/>
       <main className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="border-b border-gray-200 pb-10">
           <h1 className="text-4xl font-extrabold tracking-tight text-gray-900">
@@ -73,7 +70,6 @@ function Products() {
           </div>
         </div>
       </main>
-      <Footer/>
     </div>
   );
 }

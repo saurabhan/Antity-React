@@ -2,8 +2,7 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div className="flex items-end h-screen  bg-cover bg-bottom z-10 pb-10  lg:pb-20 ">
-      <img className="h-96 w-96 " src="./public/assets/antity-hero-resize.jpg" alt="" />
+    <div className="flex items-end h-screen bg-[url('https://raw.githubusercontent.com/saurabhan/Antity-React/Dev/frontend/public/assets/antity-hero.webp')] bg-cover bg-bottom z-10 pb-10  lg:pb-20 ">
       <div className=" text-center flex flex-col items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sm:static">
         <div className="sm:max-w-lg">
           <h1 className="text-4xl font font-extrabold tracking-tight text-gray-900 sm:text-6xl">

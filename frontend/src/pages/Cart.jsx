@@ -18,7 +18,6 @@ const Cart = () => {
   );
   return (
     <div>
-      <Navbar/>
       <div className="max-w-2xl mx-auto pt-56 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Shopping Cart</h1>
         <form className="mt-12 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
@@ -129,7 +128,6 @@ const Cart = () => {
           </section>
         </form>
       </div>
-      <Footer/>
     </div>
   )
 }
