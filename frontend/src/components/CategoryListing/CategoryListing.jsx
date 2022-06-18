@@ -8,7 +8,7 @@ const CategoryListing = () => {
               <h2 id="category-heading" className="text-2xl font-extrabold tracking-tight text-gray-900">
                 Shop by Category
               </h2>
-              <a href="/products" className="hidden text-sm font-semibold text-gray-900 hover:text-gray-700 sm:block">
+              <a href="/products/cat/all" className="hidden text-sm font-semibold text-gray-900 hover:text-gray-700 sm:block">
                 Browse all categories<span > &rarr;</span>
               </a>
             </div>
@@ -24,7 +24,7 @@ const CategoryListing = () => {
                 <div className="p-6 flex items-end">
                   <div >
                     <h3 className="font-semibold text-white">
-                      <a href="/women">
+                      <a href="/products/cat/women">
                         <span className="absolute inset-0" />
                         Women Clothing
                       </a>
@@ -48,7 +48,7 @@ const CategoryListing = () => {
                 <div className="p-6 flex items-end sm:absolute sm:inset-0">
                   <div>
                     <h3 className="font-semibold text-white">
-                      <a href="/men">
+                      <a href="/products/cat/men">
                         <span className="absolute inset-0" />
                         Men Clothing
                       </a>
@@ -72,7 +72,7 @@ const CategoryListing = () => {
                 <div className="p-6 flex items-end sm:absolute sm:inset-0">
                   <div>
                     <h3 className="font-semibold text-white">
-                      <a href="/jewellery">
+                      <a href="/products/cat/jewellery">
                         <span className="absolute inset-0" />
                         Jewellery
                       </a>
@@ -86,7 +86,7 @@ const CategoryListing = () => {
             </div>
 
             <div className="mt-6 sm:hidden">
-              <a href="/products" className="block text-sm font-semibold text-gray-900 hover:text-gray-700">
+              <a href="/products/cat/all" className="block text-sm font-semibold text-gray-900 hover:text-gray-700">
                 Browse all categories<span > &rarr;</span>
               </a>
             </div>

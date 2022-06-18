@@ -11,7 +11,7 @@ const FeaturedProducts = () => {
     <div className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-baseline sm:justify-between">
         <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">Our Favorites</h2>
-        <a href="/products" className="hidden text-sm font-semibold text-gray-900 hover:text-gray-700 sm:block">
+        <a href="/products/cat/all" className="hidden text-sm font-semibold text-gray-900 hover:text-gray-700 sm:block">
           Browse all favorites<span > &rarr;</span>
         </a>
       </div>
@@ -38,7 +38,7 @@ const FeaturedProducts = () => {
       </div>
 
       <div className="mt-6 sm:hidden">
-        <a href='/products' className="block text-sm font-semibold text-gray-600 hover:text-gray-500">
+        <a href='/products/cat/all' className="block text-sm font-semibold text-gray-600 hover:text-gray-500">
           Browse all favorites<span > &rarr;</span>
         </a>
       </div>

@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard/ProductCard";
+
 import { useFilter } from "../context/FilterContext";
 
-
 function Products() {
-  
-  const { filteredProducts, sortProducts, sortCat, sortRating} = useFilter()
-  
+  const { filteredProducts, sortProducts, sortCat, sortRating, sortByPrice } =
+    useFilter();
+  const catName = useParams();
+
+  useEffect(() => {
+    sortCat(catName.cat);
+  }, [catName.cat]);
+
   return (
     <div>
       <main className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -31,41 +37,97 @@ function Products() {
             <div className="hidden lg:block">
               <h1 className="font-bold">Price</h1>
               <div className="flex flex-col">
-
-              <label class="inline-flex items-center mt-3">
-                <input type="radio" class=" h-5 w-5 text-gray-600" value='desc' name='sort' onClick={(e) => sortProducts(e.target.value)}/><span class="ml-2 text-gray-700">high to low</span>
-              </label>
-              <label class="inline-flex items-center mt-3">
-                <input type="radio" class=" h-5 w-5 text-gray-600" value='asc' name='sort' onClick={(e) => sortProducts(e.target.value)}/><span class="ml-2 text-gray-700">low to high</span>
-              </label>
+                <label className="inline-flex items-center mt-3">
+                  <input
+                    type="radio"
+                    className=" h-5 w-5 text-gray-600"
+                    value="desc"
+                    name="sort"
+                    onClick={(e) => sortProducts(e.target.value)}
+                  />
+                  <span className="ml-2 text-gray-700">high to low</span>
+                </label>
+                <label className="inline-flex items-center mt-3">
+                  <input
+                    type="radio"
+                    className=" h-5 w-5 text-gray-600"
+                    value="asc"
+                    name="sort"
+                    onClick={(e) => sortProducts(e.target.value)}
+                  />
+                  <span className="ml-2 text-gray-700">low to high</span>
+                </label>
               </div>
-              <div className='flex flex-col mt-5'>
+              <div className="flex flex-col mt-5">
                 <h1 className="font-bold">Category</h1>
-              <label class="inline-flex items-center mt-3">
-                <input type="checkbox" class=" h-5 w-5 text-gray-600" value='women' onChange={(e) => sortCat(e.target.value)}/><span class="ml-2 text-gray-700" >Women</span>
-              </label>
-              <label class="inline-flex items-center mt-3">
-                <input type="checkbox" class=" h-5 w-5 text-gray-600" value='men' onChange={(e) => sortCat(e.target.value)}/><span class="ml-2 text-gray-700" >Men</span>
-              </label>
-              <label class="inline-flex items-center mt-3">
-                <input type="checkbox" class=" h-5 w-5 text-gray-600" value='jewellery' onChange={(e) => sortCat(e.target.value)}/><span class="ml-2 text-gray-700" >Jewellery</span>
-              </label>
+                <label className="inline-flex items-center mt-3">
+                  <input
+                    type="checkbox"
+                    className=" h-5 w-5 text-gray-600"
+                    value="women"
+                    onChange={(e) => sortCat(e.target.value)}
+                  />
+                  <span className="ml-2 text-gray-700">Women</span>
+                </label>
+                <label className="inline-flex items-center mt-3">
+                  <input
+                    type="checkbox"
+                    className=" h-5 w-5 text-gray-600"
+                    value="men"
+                    onChange={(e) => sortCat(e.target.value)}
+                  />
+                  <span className="ml-2 text-gray-700">Men</span>
+                </label>
+                <label className="inline-flex items-center mt-3">
+                  <input
+                    type="checkbox"
+                    className=" h-5 w-5 text-gray-600"
+                    value="jewellery"
+                    onChange={(e) => sortCat(e.target.value)}
+                  />
+                  <span className="ml-2 text-gray-700">Jewellery</span>
+                </label>
               </div>
               <div className="mt-5">
                 <h1 className="font-bold">Ratings</h1>
-              <label class="inline-flex items-center mt-3">
-              <span class="mr-2 text-gray-700">0</span>
-                <input onChange={(e) => sortRating(e.target.value)} type="range" class=" h-5 w-full" min="0"
-    max="5" /><span class="ml-2 text-gray-700">5</span>
-              </label>
+                <label className="inline-flex items-center mt-3">
+                  <span className="mr-2 text-gray-700">0</span>
+                  <input
+                    onChange={(e) => sortRating(e.target.value)}
+                    type="range"
+                    className=" h-5 w-full"
+                    min="0"
+                    max="5"
+                  />
+                  <span className="ml-2 text-gray-700">5</span>
+                </label>
+                <h1 className="font-bold">Price</h1>
+                <label className="inline-flex items-center mt-3">
+                  <span className="mr-2 text-gray-700">0</span>
+                  <input
+                    onChange={(e) => sortByPrice(e.target.value)}
+                    type="range"
+                    className=" h-5 w-full"
+                    min="0"
+                    max="50000"
+                    steps="1000"
+                  />
+                  <span className="ml-2 text-gray-700">35000</span>
+                </label>
               </div>
             </div>
           </aside>
           <div className="mt-6 lg:mt-0 lg:col-span-2 xl:col-span-3">
             <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
-            {filteredProducts.map((product) => (
-              <ProductCard {...product} key={product.id} />
-            ))}
+              {filteredProducts.length > 0 && filteredProducts ? (
+                filteredProducts.map((product) => (
+                  <ProductCard {...product} key={product.id} />
+                ))
+              ) : (
+                <div className="text-2xl font-bold ">
+                  <h1>Loading Products....</h1>
+                </div>
+              )}
             </div>
           </div>
         </div>

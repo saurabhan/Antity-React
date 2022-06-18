@@ -10,13 +10,13 @@ import { useCart } from "../../context/CartContext";
 
 const navigation = [{
   name: 'Women',
-  href: '/products/women'
+  href: '/products/cat/women'
 },{
   name: 'Men',
-  href: '/products/men'
+  href: '/products/cat/men'
 },{
   name: 'Jewellery',
-  href: '/products/jewellery'
+  href: '/products/cat/jewellery'
 }]
 
 function Navbar() {
@@ -29,12 +29,12 @@ function Navbar() {
         <Link to="/"><h1 className="font-bold tracking-wider text-2xl"> Antity</h1></Link>
         </div>
         <div className="invisible md:visible flex gap-10 items-center">
-          {navigation.map((item) => (
-            <Link to={item.href}><a key={item.name} className="transition ease-in-out delay-75 hover:scale-110 hover:font-bold">{item.name}</a></Link>
+          {navigation.map((item, index) => (
+            <Link to={item.href} key={index}><h1 key={index} className="transition ease-in-out delay-75 hover:scale-110 hover:font-bold">{item.name}</h1></Link>
           ))}
         </div>
         <div className="flex gap-5 items-center">
-          <Link to="/wishlist"> <ShoppingBagIcon className="h-5 w-5 text-black" />
+          <Link to="/wishlist" > <ShoppingBagIcon className="h-5 w-5 text-black" />
 
           <span className="absolute top-0.5 items-center px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-800">
         {wishlist.length}
@@ -44,7 +44,9 @@ function Navbar() {
           <span className="absolute top-0.5 items-center px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-800">
         {cart.total_items}
       </span></Link>
+      <Link to="/login"> 
           <UserIcon className="h-5 w-5 text-black" />
+      </Link>
         </div>
       </nav>
     </main>

@@ -7,6 +7,10 @@ import ProductInfo from "./pages/ProductInfo";
 import Products from "./pages/Products";
 import Wishlist from "./pages/Wishlist";
 import { Route, Routes} from 'react-router-dom';
+import Login from "./pages/Login";
+import OrderComplete from "./pages/OrderComplete";
+import ProtectedRoute from "./components/navbar/ProtectedRoute";
+import Checkout from "./pages/Checkout";
 
 function App() {
  
@@ -16,10 +20,17 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home/>}/>
-        <Route path="/products" element={<Products/>}/>
+        <Route path="/products/cat/" element={<Products/>}/>
+        <Route path="/products/cat/:cat" element={<Products/>}/>
         <Route path="/products/:productId" element={<ProductInfo/>}/>
-        <Route path="/cart" element={<Cart/>}/>
-        <Route path="/wishlist" element={<Wishlist/>}/>
+        <Route path="/order/:orderId" element={<OrderComplete/>}/>
+        <Route path="/cart" element={<ProtectedRoute><Cart/></ProtectedRoute>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/checkout" element={<Checkout/>}/>
+        <Route path="/wishlist" element={<ProtectedRoute>
+          <Wishlist/>
+          </ProtectedRoute>
+          }/>
       </Routes>
       <Footer />
     </div>

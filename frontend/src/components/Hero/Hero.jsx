@@ -16,7 +16,7 @@ const Hero = () => {
         <div>
           <div className="mt-10">
             <a
-              href="/products"
+              href="/products/cat/all"
               className="inline-block text-center bg-gray-900 border border-transparent rounded-md py-3 px-8 font-medium text-white hover:bg-gray-700 transition ease-in-out"
             >
               Shop Collection
