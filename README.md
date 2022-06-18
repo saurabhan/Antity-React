@@ -10,5 +10,5 @@ A Full Stack Ecommerce App built with React, tailwindCSS, Firebase and Razorpay 
 
 ## Video Demo:
 
-![](https://raw.githubusercontent.com/saurabhan/Antity-React/main/video/antity-promo.gif)
+https://user-images.githubusercontent.com/1729481/174430585-c6d76c53-efce-4ae3-879e-25e0125c96fc.mp4
 
