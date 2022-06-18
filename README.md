@@ -4,7 +4,7 @@ A Full Stack Ecommerce App built with React, tailwindCSS, Firebase and Razorpay 
 
 ---
 
-## Live Website: [ANITTY](https://antity-react.vercel.app/)
+## Live Website: [ANTITY](https://antity-react.vercel.app/)
 
 ---
 
