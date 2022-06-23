@@ -1,25 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/auth-context";
+import * as yup from 'yup';
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import toast, { Toaster } from "react-hot-toast";
+import { auth } from "../firebase/firebase";
+
+const schema = yup.object().shape({
+  username: yup.string(),
+  email: yup.string().email().required(),
+  password: yup.string().min(8).max(32).required(),
+});
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const { signIn, signUp, user, logout } = useAuth();
+  const { signIn, signUp, user, loading, logout, error } = useAuth();
   const [login, setLogin] = useState(true);
 
-  const handleSubmit = (e, email, password, username) => {
-    e.preventDefault();
+
+  const { register, handleSubmit, reset, setValue, formState:{ errors, touchedFields } } = useForm({
+    resolver: yupResolver(schema)
+  });
+
+
+
+  
+  const onSubmit =  (data) => {
+    const {email, password} = data
     if (login) {
       signIn(email, password);
     } else {
       signUp(email, password, username);
     }
-  };
+    reset()
+  }
+
+
+
 
   if (user) {
     return (
       <div className="  min-h-full h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h1 className="text-2xl font-bold text-center mx-auto h-12 w-auto">
             ANTITY
@@ -42,6 +64,7 @@ const Login = () => {
   }
   return (
     <>
+  
       <div className="  min-h-full h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h1 className="text-2xl font-bold text-center mx-auto h-12 w-auto">
@@ -54,36 +77,55 @@ const Login = () => {
 
         <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white  py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6 justify-center" action="#" method="POST">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 justify-center" method="post">
               <div className="flex flex-col space-y-10 justify-center">
                 {login ? (
                   ""
                 ) : (
-                  <input
-                  className="rounded-md p-2 bg-gray-100"
-                    size="lg"
-                    width="360px"
-                    placeholder="Username"
-                    onChange={(e) => setUsername(e.target.value)}
-                  >
-                    </input>
+                  <>
+                  <div>
+                    <input
+                {...register("username")}
+                className="rounded-md  bg-gray-100 w-full"
+                name="username"
+            
+                type="text"
+              
+                placeholder="Enter your Username"
+                onChange={(e) => setUsername(e.target.value)}
+                ></input>
+                    <p className="text-red-500">{errors.username?.message && touchedFields.username ? errors.username.message : ""}</p>
+                  </div>
+                
+                  </>
                 )}
+                <div className="w-full">
+
                 <input
-                className="rounded-md p-2 bg-gray-100"
-                  size="lg"
-                  type="text"
-                  width="360px"
-                  placeholder="Enter your email"
-                  onChange={(e) => setEmail(e.target.value)}
+                {...register("email")}
+                className="rounded-md  bg-gray-100 w-full"
+                name="email"
+                
+                type="text"
+              
+                placeholder="Enter your email"
                 ></input>
+                <p className="text-red-500">{errors.email?.message && touchedFields.email ? errors.email.message : ""}</p>
+                </div>
+                <div>
+
                 <input
-                 className="rounded-md p-2 bg-gray-100"
-                  size="lg"
+                {...register("password")}
+                 className="rounded-md p-2 bg-gray-100 w-full"
+                  name="password"
+                  
                   type="password"
-                  width="360px"
+                 
                   placeholder="Password"
-                  onChange={(e) => setPassword(e.target.value)}
-                ></input>
+                  ></input>
+                <p className="text-red-500">{errors.password?.message && touchedFields.password ? errors.password.message : ""}</p>
+                
+                </div>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
@@ -100,21 +142,13 @@ const Login = () => {
                     Remember me
                   </label>
                 </div>
-
-                <div className="text-sm">
-                  <p
-                    href="#"
-                    className=" font-medium text-gray-600 hover:text-gray-500"
-                  >
-                    Forgot your password?
-                  </p>
-                </div>
+ 
               </div>
               <div className="text-sm">
                 
                   <a
                     onClick={() => setLogin(!login)}
-                    className="font-medium text-center underline text-gray-600 hover:text-gray-500"
+                    className="font-medium cursor-pointer text-center underline text-gray-600 hover:text-gray-500"
                   >
                     {login
                       ? "Create a new Account"
@@ -126,23 +160,25 @@ const Login = () => {
               <div>
                 {login ? (
                   <button
-                    onClick={(e) => handleSubmit(e, email, password)}
+                  type="submit"
                     className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-900 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                   >
                     Sign in
                   </button>
                 ) : (
                   <button
-                    onClick={(e) => handleSubmit(e, email, password, username)}
+                  type="submit"
                     className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-900 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                   >
                     Sign Up
                   </button>
                 )}
                 <button
-                  onClick={(e) =>
-                    handleSubmit(e, "guest@guest.com", "guest123")
-                  }
+                onClick={() => {
+                  setValue("email", "guest@guest.com")
+                  setValue("password", "guest123")
+                }}
+                  
                   className="w-full mt-4 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
                 >
                   Use Guest Login

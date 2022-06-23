@@ -2,6 +2,17 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/auth-context'
 import { useCart } from '../context/CartContext'
+import * as yup from "yup"
+import { yupResolver} from "@hookform/resolvers/yup"
+import { useForm } from 'react-hook-form'
+
+
+const schema = yup.object().shape({
+  address : yup.string().required(),
+  city : yup.string().required(),
+  state : yup.string().required(),
+  postalCode : yup.number().positive().required(),
+})
 
 const Checkout = () => {
     const [address, setAddress] = useState('')
@@ -11,6 +22,8 @@ const Checkout = () => {
     const {user} = useAuth()
     const navigate = useNavigate()
     const {cart, emptyCart, checkoutToken, handleDetails} = useCart()
+    const {register, handleSubmit, reset, formState : { errors, touchedFields} } = useForm(
+     { resolver: yupResolver(schema),})
     
 
     const customerInfo = {
@@ -25,9 +38,7 @@ const Checkout = () => {
     const handlePayment = () => {
         const ID= checkoutToken.id.split("_")[1]
         emptyCart(customerInfo)
-        navigate("/order/"+ID, {replace: true})
-        // setShippingDetails(customerInfo)
-        
+        navigate("/order/"+ID, {replace: true})        
       }
     
     
@@ -61,10 +72,18 @@ const Checkout = () => {
         razorpay.open();
       };
 
-      const handleSubmit = (e)=>{
-        e.preventDefault()
+
+      const onSubmitHandler = (data)=>{
+        const {address, state, city, postalCode} = data
+        const cusInfo = {
+          address,
+          state,
+          city,
+          pincode : postalCode
+        }
+        // e.preventDefault()
         handleRazorPay()
-        handleDetails(customerInfo)
+        handleDetails(cusInfo)
         }
       
 
@@ -139,7 +158,7 @@ const Checkout = () => {
           Payment and shipping details
         </h2>
 
-        <form>
+        <form onSubmit={handleSubmit(onSubmitHandler)} method="post">
           <div className="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0">
             <div>
               <h3 id="contact-info-heading" className="text-lg font-medium text-gray-900">
@@ -152,10 +171,10 @@ const Checkout = () => {
                 </label>
                 <div className="mt-1">
                   <input
+                  {...register('email')}
                     type="email"
-                    id="email-address"
-                    name="email-address"
-                    autoComplete="email"
+                    id="email"
+                    name="email"
                     className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
                   />
                 </div>
@@ -178,13 +197,14 @@ const Checkout = () => {
                   </label>
                   <div className="mt-1">
                     <input
+                    {...register("address")}
                     onChange={(e) => setAddress(e.target.value)}
                       type="text"
                       id="address"
                       name="address"
-                      autoComplete="street-address"
                       className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
                     />
+                    <p className="text-red-500">{errors.address?.message && touchedFields.address ? errors.address.message : ""}</p>
                   </div>
                 </div>
 
@@ -194,45 +214,48 @@ const Checkout = () => {
                   </label>
                   <div className="mt-1">
                     <input
+                    {...register("city")}
                         onChange={(e) => setCity(e.target.value)}
                       type="text"
                       id="city"
                       name="city"
-                      autoComplete="address-level2"
                       className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
                     />
+                    <p className="text-red-500">{errors.city?.message && touchedFields.city ? errors.city.message : ""}</p>
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="region" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="state" className="block text-sm font-medium text-gray-700">
                     State / Province
                   </label>
                   <div className="mt-1">
                     <input
+                    {...register("state")}
                         onChange={(e) => setState(e.target.value)}
                       type="text"
-                      id="region"
-                      name="region"
-                      autoComplete="address-level1"
+                      id="state"
+                      name="state"
                       className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
                     />
+                    <p className="text-red-500">{errors.state?.message && touchedFields.state ? errors.state.message : ""}</p>
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="postal-code" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700">
                     Postal code
                   </label>
                   <div className="mt-1">
                     <input
+                    {...register("postalCode", {valueAsNumber: true})}
                         onChange={(e) => setPostalCode(e.target.value)}
-                      type="text"
-                      id="postal-code"
-                      name="postal-code"
-                      autoComplete="postal-code"
+                      type="number"
+                      id="postalCode"
+                      name="postalCode"
                       className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
                     />
+                   <p className="text-red-500">{errors.postalCode?.message && touchedFields.postalCode ? errors.postalCode.message : ""}</p>
                   </div>
                 </div>
               </div>
@@ -260,7 +283,7 @@ const Checkout = () => {
             <div className="mt-10 flex justify-end pt-6 border-t border-gray-200">
               <button
                 type="submit"
-                onClick={(e) => handleSubmit(e)}
+                // onClick={(e) => handleSubmit(e)}
                 className="bg-gray-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-500"
               >
                 Pay now

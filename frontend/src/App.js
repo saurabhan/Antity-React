@@ -6,18 +6,31 @@ import Home from "./pages/Home";
 import ProductInfo from "./pages/ProductInfo";
 import Products from "./pages/Products";
 import Wishlist from "./pages/Wishlist";
-import { Route, Routes} from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation} from 'react-router-dom';
 import Login from "./pages/Login";
 import OrderComplete from "./pages/OrderComplete";
 import ProtectedRoute from "./components/navbar/ProtectedRoute";
 import Checkout from "./pages/Checkout";
+import { useLayoutEffect } from "react";
+import { Toaster } from "react-hot-toast";
 
 function App() {
+
  
+  const Wrapper = ({children}) => {
+    const location = useLocation();
+    useLayoutEffect(() => {
+      document.documentElement.scrollTo(0, 0);
+    }, [location.pathname]);
+    return children
+  } 
 
   return (
     <div>
+      <Toaster/>
       <Navbar />
+      <Wrapper>
+
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/products/cat/" element={<Products/>}/>
@@ -32,6 +45,8 @@ function App() {
           </ProtectedRoute>
           }/>
       </Routes>
+      </Wrapper>
+
       <Footer />
     </div>
   )

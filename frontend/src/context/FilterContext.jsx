@@ -43,10 +43,12 @@ const FilterProvider = ({ children }) => {
     setFilteredProducts(priceFilter);
   };
   const sortCat = async (cat = []) => {
+
     const { data } = await commerce.products.list({
-      category_slug: [cat],
+      category_slug: cat,
     });
     setFilteredProducts(data);
+
   };
 
   useEffect(() => {

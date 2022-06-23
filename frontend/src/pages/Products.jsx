@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard/ProductCard";
 
@@ -8,10 +8,13 @@ function Products() {
   const { filteredProducts, sortProducts, sortCat, sortRating, sortByPrice } =
     useFilter();
   const catName = useParams();
-
+  const [cat, setCat ]= useState([])
   useEffect(() => {
+    if(cat.length > 0) {
+      sortCat(cat)
+    }
     sortCat(catName.cat);
-  }, [catName.cat]);
+  }, [catName.cat, cat]);
 
   return (
     <div>
@@ -65,7 +68,16 @@ function Products() {
                     type="checkbox"
                     className=" h-5 w-5 text-gray-600"
                     value="women"
-                    onChange={(e) => sortCat(e.target.value)}
+                    onChange={(e) => {
+                      if(e.target.checked){
+                        setCat([...cat, e.target.value]);
+                      }else{
+                        setCat(
+                          cat.filter(c => c !== e.target.value)
+                        )}
+                       
+                    }}
+                
                   />
                   <span className="ml-2 text-gray-700">Women</span>
                 </label>
@@ -74,7 +86,17 @@ function Products() {
                     type="checkbox"
                     className=" h-5 w-5 text-gray-600"
                     value="men"
-                    onChange={(e) => sortCat(e.target.value)}
+                    onChange={(e) => {
+                      if(e.target.checked){
+                        setCat([...cat, e.target.value]);
+                        
+                      }else{
+                        setCat(
+                          cat.filter(c => c !== e.target.value)
+                          )
+                         
+                      }
+                    }}
                   />
                   <span className="ml-2 text-gray-700">Men</span>
                 </label>
@@ -83,7 +105,18 @@ function Products() {
                     type="checkbox"
                     className=" h-5 w-5 text-gray-600"
                     value="jewellery"
-                    onChange={(e) => sortCat(e.target.value)}
+                    onChange={(e) => {
+                      if(e.target.checked){
+                        setCat([...cat, e.target.value]);
+                    
+                      }else{
+                        setCat(
+                          cat.filter(c => c !== e.target.value)
+                        )
+                        
+                      }
+                    
+                    }}
                   />
                   <span className="ml-2 text-gray-700">Jewellery</span>
                 </label>
@@ -119,7 +152,7 @@ function Products() {
           </aside>
           <div className="mt-6 lg:mt-0 lg:col-span-2 xl:col-span-3">
             <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
-              {filteredProducts.length > 0 && filteredProducts ? (
+              {filteredProducts?.length > 0 && filteredProducts ? (
                 filteredProducts.map((product) => (
                   <ProductCard {...product} key={product.id} />
                 ))
