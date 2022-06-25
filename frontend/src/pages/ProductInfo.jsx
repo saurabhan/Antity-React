@@ -15,10 +15,10 @@ function classNames(...classes) {
 }
 
 export default function ProductInfo() {
-  const productID = useParams();
+  const ID = useParams();
   const {products, addToCart } = useCart()
   const {  addToWishlist} = useWishlist()
-  const product = products.filter(product => product.id === productID.productId)
+  const product = products.filter(product => product.id === ID.productId)
 
 
   
@@ -48,7 +48,7 @@ export default function ProductInfo() {
           <section className="mt-4">
             <div className="flex items-center">
               <p className="text-lg text-gray-900 sm:text-xl">
-                {product[0].price.raw}
+                {product[0].price.formatted_with_symbol}
               </p>
 
               <div className="ml-4 pl-4 border-l border-gray-300">
@@ -93,7 +93,7 @@ export default function ProductInfo() {
         </div>
         <div className="mt-6 flex flex-col gap-4">
                 <button
-                  onClick={() => addToWishlist(product[0], productID)}
+                  onClick={() => {addToWishlist(product[0], ID.productId)}}
                   className="relative flex bg-gray-100 border border-transparent rounded-md py-2 px-8 items-center justify-center text-sm font-medium text-gray-900 hover:bg-gray-200"
                 >
                   Add to Wishlist

@@ -37,20 +37,27 @@ const FilterProvider = ({ children }) => {
     setFilteredProducts(data);
   };
 
-  const sortByPrice = async (price) => {
-    const priceFilter = products.filter((p) => p?.price.raw <= price);
+  const sortByPrice = async (order) => {
 
-    setFilteredProducts(priceFilter);
+    const priceFilter = products.filter((p) => p?.price.raw <= order);
+
+        setFilteredProducts(priceFilter);
   };
-  const sortCat = async (cat = []) => {
-    const { data } = await commerce.products.list({
-      category_slug: [cat],
-    });
-    setFilteredProducts(data);
+
+  const sortCat =  (cat = []) => {
+
+    const catFilter =   products.filter((p) => cat.includes(p.categories[0].slug))
+    if(catFilter.length ===0){
+      setFilteredProducts(products)
+    }else{
+      setFilteredProducts(catFilter)
+    }
   };
+  
 
   useEffect(() => {
     fetchProducts();
+
   }, []);
 
   return (

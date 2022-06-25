@@ -13,10 +13,8 @@ const Wishlist = () => {
         <div className="mt-6 lg:mt-0 lg:col-span-2 xl:col-span-3">
           <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
             {wishlist.map((product) => (
-              <div>
-                <div>
-                  <div>
-                    <div href="#" className="relative">
+              <div key={product.id}>
+                    <div className="relative">
                       <div className="relative w-full h-72  overflow-hidden">
                         <img
                           src={product.image.url}
@@ -58,8 +56,8 @@ const Wishlist = () => {
                         Add to Cart
                       </button>
                     </div>
-                  </div>
-                </div>
+             
+           
               </div>
             ))}
           </div>

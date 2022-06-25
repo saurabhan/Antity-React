@@ -7,6 +7,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext({
   user: null,
@@ -28,9 +29,11 @@ export const AuthProvider = ({ children }) => {
       if (user) {
         setUser(user);
         setLoading(false);
+   
       } else {
         setUser(null);
-        setLoading(true);
+        setLoading(true)
+        setError(error);
       }
       setLoading(false);
     });
@@ -43,10 +46,18 @@ export const AuthProvider = ({ children }) => {
       .then((credentials) => {
         setUser(credentials.user);
         setLoading(false);
+        toast.success('Login Successesful', {
+          duration: 3000,
+          position: 'bottom-center',
+          })
       })
       .catch((error) => {
         setError(error.message);
-        alert(error.message);
+        toast.error('Wrong Credentials, no user exists', {
+          duration: 3000,
+          position: 'bottom-center',
+          })
+      
       })
       .finally(() => {
         setLoading(false);
@@ -66,9 +77,14 @@ export const AuthProvider = ({ children }) => {
       })
       .catch((error) => {
         setError(error.message);
+        toast.error('Wrong Credentials', {
+          duration: 3000,
+          position: 'bottom-center',
+          })
       })
       .finally(() => {
         setLoading(false);
+        setError(error);
       });
   };
 
