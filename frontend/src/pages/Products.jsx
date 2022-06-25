@@ -7,15 +7,19 @@ import { useFilter } from "../context/FilterContext";
 function Products() {
   const { filteredProducts, sortProducts, sortCat, sortRating, sortByPrice } =
     useFilter();
+
   const catName = useParams();
   const [cat, setCat ]= useState([])
+  
   useEffect(() => {
-    if(cat.length > 0) {
-      sortCat(cat)
-    }
-    sortCat(catName.cat);
-  }, [catName.cat, cat]);
+ 
+      sortCat(cat);
 
+  }, [cat]);
+
+  useEffect(() =>{
+    sortCat([catName.cat]);
+  },[catName.cat])
   return (
     <div>
       <main className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -46,7 +50,7 @@ function Products() {
                     className=" h-5 w-5 text-gray-600"
                     value="desc"
                     name="sort"
-                    onClick={(e) => sortProducts(e.target.value)}
+                    onChange={(e) => sortProducts(e.target.value)}
                   />
                   <span className="ml-2 text-gray-700">high to low</span>
                 </label>
@@ -68,6 +72,7 @@ function Products() {
                     type="checkbox"
                     className=" h-5 w-5 text-gray-600"
                     value="women"
+                    // onClick={() => sortCat(cat)}
                     onChange={(e) => {
                       if(e.target.checked){
                         setCat([...cat, e.target.value]);
@@ -75,7 +80,7 @@ function Products() {
                         setCat(
                           cat.filter(c => c !== e.target.value)
                         )}
-                       
+                       sortCat(cat)
                     }}
                 
                   />
